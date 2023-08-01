@@ -60,6 +60,7 @@ public class Notas extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.VERTICAL, false));
         adaptador = new Notas_Adaptador();
         recyclerView.setAdapter(adaptador);
+        recyclerView.setHasFixedSize(true);
     }
 
     private void referenciar() {

@@ -33,6 +33,7 @@ public class Horarios extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
         adapter = new Horarios_Adapter();
         recyclerView.setAdapter(adapter);
+        recyclerView.setHasFixedSize(true);
         int codigo = 1;
         ApiService_horarios apiService_horarios = RetrofitClient.getRetrofitInstance().create(ApiService_horarios.class);
         Call<List<Clases.Horarios>> call = apiService_horarios.getMaterias_Horarios(codigo);
