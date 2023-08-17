@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -30,9 +31,12 @@ public class Notas extends AppCompatActivity {
 
     private void inputData() {
         inputAdapter();
-        int codigo = 1;
+
+        SharedPreferences sharedPreferences = getSharedPreferences("MiPref", MODE_PRIVATE);
+        int savedValue = sharedPreferences.getInt("cod", 0);
+
         ApiService_notas apiService_notas = RetrofitClient.getRetrofitInstance().create(ApiService_notas.class);
-        Call<List<Clases.Notas>> call = apiService_notas.getNotas(codigo);
+        Call<List<Clases.Notas>> call = apiService_notas.getNotas(savedValue);
         call.enqueue(new Callback<List<Clases.Notas>>() {
             @Override
             public void onResponse(Call<List<Clases.Notas>> call, Response<List<Clases.Notas>> response) {

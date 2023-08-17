@@ -23,6 +23,11 @@ public class Menu extends AppCompatActivity implements View.OnClickListener {
         listener();
     }
 
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(true);
+    }
+
     private void listener() {
         horario.setOnClickListener(this);
         eventos.setOnClickListener(this);

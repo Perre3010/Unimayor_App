@@ -53,6 +53,58 @@ app.get('/estudiante/:codigo/notas', async (req, res) => {
   }
 });
 
+// Registrar un nuevo estudiante
+app.post('/register', async (req, res) => {
+  try {
+    const {
+      codigo,
+      alumno,
+      periodo,
+      nom_materia,
+      apreciacion,
+      total_faltas,
+      nota_examen1,
+      nota_examen2,
+      nota_examen3,
+      nota_definitiva,
+      nota_habilitacion,
+      horario,
+      docente
+    } = req.body;
+
+    // Verificar si el estudiante ya está registrado
+    const existingStudent = await Ejemplo.findOne({ codigo });
+    if (existingStudent) {
+      return res.status(409).json({ message: 'El estudiante ya está registrado' });
+    }
+
+    // Crear un nuevo estudiante
+    const newStudent = new Ejemplo({
+      codigo,
+      alumno,
+      periodo,
+      nom_materia,
+      apreciacion,
+      total_faltas,
+      nota_examen1,
+      nota_examen2,
+      nota_examen3,
+      nota_definitiva,
+      nota_habilitacion,
+      horario,
+      docente
+    });
+
+    // Guardar el nuevo estudiante en la base de datos
+    await newStudent.save();
+
+    res.status(201).json({ message: 'Estudiante registrado exitosamente' });
+  } catch (error) {
+    console.error('Error al registrar el estudiante:', error);
+    res.status(500).json({ error: 'Error en el servidor' });
+  }
+});
+
 
 // Iniciar el servidor
 app.listen(port, () => {

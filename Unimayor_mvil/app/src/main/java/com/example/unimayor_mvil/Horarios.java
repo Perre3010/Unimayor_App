@@ -1,7 +1,7 @@
 package com.example.unimayor_mvil;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,9 +34,12 @@ public class Horarios extends AppCompatActivity {
         adapter = new Horarios_Adapter();
         recyclerView.setAdapter(adapter);
         recyclerView.setHasFixedSize(true);
-        int codigo = 1;
+
+        SharedPreferences sharedPreferences = getSharedPreferences("MiPref", MODE_PRIVATE);
+        int savedValue = sharedPreferences.getInt("cod", 0);
+
         ApiService_horarios apiService_horarios = RetrofitClient.getRetrofitInstance().create(ApiService_horarios.class);
-        Call<List<Clases.Horarios>> call = apiService_horarios.getMaterias_Horarios(codigo);
+        Call<List<Clases.Horarios>> call = apiService_horarios.getMaterias_Horarios(savedValue);
         call.enqueue(new Callback<List<Clases.Horarios>>() {
             @Override
             public void onResponse(Call<List<Clases.Horarios>> call, Response<List<Clases.Horarios>> response) {
@@ -60,6 +63,6 @@ public class Horarios extends AppCompatActivity {
     }
 
     private void referenciar() {
-        recyclerView = findViewById(R.id.recyclerView_notas);
+        recyclerView = findViewById(R.id.recyclerView_horarios);
     }
 }
