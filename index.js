@@ -105,6 +105,25 @@ app.post('/register', async (req, res) => {
   }
 });
 
+// Validar si un código de estudiante existe en la base de datos
+app.get('/estudiante/validar/:codigo', async (req, res) => {
+  try {
+    const codigoEstudiante = req.params.codigo;
+    const estudiante = await Ejemplo.findOne({ codigo: codigoEstudiante }, '_id');
+
+    if (estudiante) {
+      // El código existe en la base de datos
+      res.json({ existe: true });
+    } else {
+      // El código no existe en la base de datos
+      res.json({ existe: false });
+    }
+  } catch (error) {
+    console.error('Error al validar el código de estudiante:', error);
+    res.status(500).send('Error en el servidor');
+  }
+});
+
 
 // Iniciar el servidor
 app.listen(port, () => {
